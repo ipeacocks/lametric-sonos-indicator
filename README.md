@@ -17,24 +17,28 @@ This panel is written on next libraries:
 
 Clone code:
 ```
-# git clone git@github.com:ipeacocks/lametric-sonos-indicator.git
+$ git clone git@github.com:ipeacocks/lametric-sonos-indicator.git
 ```
 Simply create virtualenv:
 ```
-# cd lametric-sonos-indicator
-# python3 -m venv venv
+$ cd lametric-sonos-indicator
+$ python3 -m venv venv
 ```
 Activate virtual env:
 ```
-# source venv/bin/activate
+$ source venv/bin/activate
 ```
 That's almost it. Use `requirments.txt` to setup all python dependencies:
 ```
-# pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
-Rename `settings.py_example` to `settings.py`, fill IP of lametric there and launch:
-
+Rename `settings.py_example` to `settings.py`, fill [IP address and API key](https://lametric-documentation.readthedocs.io/en/latest/guides/first-steps/first-local-notification.html#find-api-key) of your lametric in it and launch:
 ```
-python3 main_class.py
+$ python3 main_class.py
 ```
 That's it. Hope it would be useful for you.
+
+**Links**: \
+https://lametric-documentation.readthedocs.io/en/latest/index.html \
+https://blog.aruehe.io/tag/lametric/ \
+http://docs.python-soco.com/en/latest/
