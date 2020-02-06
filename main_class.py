@@ -7,10 +7,10 @@ import time
 import settings
 
 class LaSo:
-    def __init__(self, lametric_ip, lametric_user, lametric_key, sonos):
+    def __init__(self, lametric_ip, lametric_user, lametric_api_key, sonos):
         self.lametric_ip = lametric_ip
         self.lametric_user = lametric_user
-        self.lametric_key = lametric_key
+        self.lametric_api_key = lametric_api_key
         self.sonos = sonos
 
     def get_track(self):
@@ -28,7 +28,7 @@ class LaSo:
 
             api_url = "http://%s:8080/api/v2/device/notifications" % (self.lametric_ip)
             headers = {'Content-Type': 'application/json; charset=utf-8'}
-            basicAuthCredentials = (self.lametric_user, self.lametric_key)
+            basicAuthCredentials = (self.lametric_user, self.lametric_api_key)
             data = '{"model":{"frames":[{"icon":"19113","text":"%s - %s"}]}}' % (artist, title)
             response = requests.post(api_url,
                                      headers=headers,
