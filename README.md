@@ -17,11 +17,11 @@ This panel is written on next libraries:
 
 Clone code:
 ```
-# git clone git@github.com:ipeacocks/lametric_sonos_indicator.git
+# git clone git@github.com:ipeacocks/lametric-sonos-indicator.git
 ```
 Simply create virtualenv:
 ```
-# cd lametric_sonos_indicator
+# cd lametric-sonos-indicator
 # python3 -m venv venv
 ```
 Activate virtual env:
