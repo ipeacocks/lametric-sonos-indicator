@@ -13,7 +13,7 @@ This panel is written on next libraries:
 * [SoCo](https://github.com/SoCo/SoCo)
 * Requests
 
-## Installation
+## Traditional Installation
 
 Clone code:
 ```
@@ -32,10 +32,33 @@ That's almost it. Use `requirments.txt` to setup all python dependencies:
 ```
 $ pip install -r requirements.txt
 ```
-Rename `settings.py_example` to `settings.py`, fill [IP address and API key](https://lametric-documentation.readthedocs.io/en/latest/guides/first-steps/first-local-notification.html#find-api-key) of your lametric in it and launch:
+Get and create env variables [LAMETRIC_IP and LAMETRIC_API_KEY](https://lametric-documentation.readthedocs.io/en/latest/guides/first-steps/first-local-notification.html#find-api-key):
 ```
-$ python3 main_class.py
+$ export LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4"
+$ export LAMETRIC_IP="192.168.1.25"
 ```
+And then lauch:
+```
+$ python3 main.py
+```
+
+## Docker
+
+Also it's possible to launch this indicator in docker, but you need to build this image by yourself:
+```
+# cd lametric-sonos-indicator # this clonned repository
+# docker build -t lametric-sonos .
+
+# docker run \
+  -d \
+  --name lametric-sonos \
+  --net host \
+  --env LAMETRIC_IP="192.168.1.25" \
+  --env LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4" \
+  --restart unless-stopped \
+  lametric-sonos
+```
+
 That's it. Hope it would be useful for you.
 
 **Links**: \
