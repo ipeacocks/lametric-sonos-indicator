@@ -36,7 +36,10 @@ Get and create env variables [LAMETRIC_IP and LAMETRIC_API_KEY](https://lametric
 ```
 $ export LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4"
 $ export LAMETRIC_IP="192.168.1.25"
+$ export DELAY=30
 ```
+`DELAY` is a time in seconds how often to send notification to Lametric Time.
+
 And then lauch:
 ```
 $ python3 main.py
@@ -55,6 +58,7 @@ Also it's possible to launch this indicator in docker, but you need to build thi
   --net host \
   --env LAMETRIC_IP="192.168.1.25" \
   --env LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4" \
+  --env DELAY=60 \
   --restart unless-stopped \
   lametric-sonos
 ```

@@ -31,10 +31,22 @@ class LaSo:
             headers = {'Content-Type': 'application/json; charset=utf-8'}
             basicAuthCredentials = (self.lametric_user, self.lametric_api_key)
             data = '{"model":{"frames":[{"icon":"19113","text":"%s - %s"}]}}' % (artist, title)
-            response = requests.post(api_url,
-                                     headers=headers,
-                                     auth=basicAuthCredentials,
-                                     data=data.encode('utf-8'))
+            try:
+                response = requests.post(api_url,
+                                         headers=headers,
+                                         auth=basicAuthCredentials,
+                                         data=data.encode('utf-8'),
+                                         timeout=3)
+                # for debugging purpose
+                print(f"{artist} - {title}")
+            except requests.exceptions.RequestException as err:
+                print ("OOps: Something Else", err)
+            except requests.exceptions.HTTPError as errh:
+                print ("Http Error:", errh)
+            except requests.exceptions.ConnectionError as errc:
+                print ("Error Connecting:", errc)
+            except requests.exceptions.Timeout as errt:
+                print ("Timeout Error:", errt)  
 
 def main():
     # If you wish to show specific speaker song use its IP
@@ -44,10 +56,14 @@ def main():
                 "dev",
                 os.environ["LAMETRIC_API_KEY"],
                 sonos)
+    # if envar DELAY isn't set than it equals 60
+    delay = os.getenv('DELAY', 60)
+    print(delay)
+
     while True:
         laso.get_track()
         laso.send_notification()
-        time.sleep(60)
+        time.sleep(int(delay))
 
 if __name__ == "__main__":
     main()
