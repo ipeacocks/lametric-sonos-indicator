@@ -58,7 +58,7 @@ def main():
                 sonos)
     # if envar DELAY isn't set than it equals 60
     delay = os.getenv('DELAY', 60)
-    print(delay)
+    # print(delay)
 
     while True:
         laso.get_track()
