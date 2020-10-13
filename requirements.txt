@@ -1,8 +1,7 @@
-certifi==2019.11.28
+certifi==2020.6.20
 chardet==3.0.4
-idna==2.8
-# pkg-resources==0.0.0
-requests==2.22.0
-soco==0.18.1
-urllib3==1.25.8
+idna==2.10
+requests==2.24.0
+soco==0.19
+urllib3==1.25.10
 xmltodict==0.12.0
