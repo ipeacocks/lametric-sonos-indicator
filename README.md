@@ -40,7 +40,11 @@ $ export DELAY=30
 ```
 `DELAY` is a time in seconds how often to send notification to Lametric Time.
 
-And then lauch:
+If you have more than 1 speaker and wish to get status from particular one - annonce `SPEAKER_NAME` env variable:
+```
+$ export SPEAKER_NAME="Guest Room"
+```
+And then launch:
 ```
 $ python3 main.py
 ```
@@ -59,6 +63,7 @@ Also it's possible to launch this indicator in docker, but you need to build thi
   --env LAMETRIC_IP="192.168.1.25" \
   --env LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4" \
   --env DELAY=60 \
+  --env SPEAKER_NAME="Guest Room" \
   --restart unless-stopped \
   lametric-sonos
 ```
