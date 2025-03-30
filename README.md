@@ -63,7 +63,7 @@ Also it's possible to launch this indicator in docker, but you need to build thi
   --env LAMETRIC_IP="192.168.1.25" \
   --env LAMETRIC_API_KEY="e56b92_lametric_long_api_string_c2a0c4" \
   --env DELAY=60 \
-  --env SPEAKER_NAME="Guest Room" \
+  --env SPEAKER_NAME="Guest Room"
   --restart unless-stopped \
   lametric-sonos
 ```

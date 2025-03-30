@@ -7,42 +7,29 @@ import os
 
 
 class LaSo:
-    def __init__(self, lametric_ip, lametric_user, lametric_api_key, sonos_devices):
+    def __init__(self, lametric_ip, lametric_user, lametric_api_key, sonos):
         self.lametric_ip = lametric_ip
         self.lametric_user = lametric_user
         self.lametric_api_key = lametric_api_key
-        self.sonos_devices = sonos_devices
+        self.sonos = sonos
 
     def get_track(self):
-        for sonos_device in self.sonos_devices:
-            if sonos_device.get_current_track_info()['artist'] != '':
-                print(sonos_device)
-                print(sonos_device.get_current_track_info()['artist'])
-                break
-            else:
-                print(sonos_device)
-                print('empty track')
-
-        track = sonos_device.get_current_track_info()
-        status = sonos_device.get_current_transport_info()
-        is_playing_tv = sonos_device.is_playing_tv
+        track = self.sonos.get_current_track_info()
+        status = self.sonos.get_current_transport_info()
+        is_playing_tv = self.sonos.is_playing_tv
         return track, status, is_playing_tv
 
     def send_notification(self):
         track, status, is_playing_tv = self.get_track()
 
-        if status["current_transport_state"] == "PLAYING" and not is_playing_tv:
+        if status["current_transport_state"] == "PLAYING" and not is_playing_tv and self.sonos.is_coordinator:
 
-            artist = track["artist"]
-            title = track["title"]
-            print(artist)
-            print(title)
             api_url = "http://%s:8080/api/v2/device/notifications" % (self.lametric_ip)
             headers = {"Content-Type": "application/json; charset=utf-8"}
             basicAuthCredentials = (self.lametric_user, self.lametric_api_key)
             data = '{"model":{"frames":[{"icon":"19113","text":"%s - %s"}]}}' % (
-                artist,
-                title,
+                track["artist"],
+                track["title"],
             )
             try:
                 response = requests.post(
@@ -53,7 +40,7 @@ class LaSo:
                     timeout=3,
                 )
                 # for debugging purpose
-                print(f"{artist} - {title}")
+                print(f"{track["artist"]} - {track["title"]}")
             except requests.exceptions.RequestException as err:
                 print("OOps: Something Else", err)
             except requests.exceptions.HTTPError as errh:
@@ -65,15 +52,18 @@ class LaSo:
 
 
 def main():
-    # If you wish to show specific speaker song use its IP
+    # If you wish to show specific speaker song use its IP, name or any
     # sonos = soco.SoCo('192.168.1.86')
-    sonos_devices = soco.discover()
-    laso = LaSo(os.environ["LAMETRIC_IP"], "dev", os.environ["LAMETRIC_API_KEY"], sonos_devices)
+    if "SPEAKER_NAME" in os.environ:
+        sonos = soco.discovery.by_name(os.environ["SPEAKER_NAME"])
+    else:
+       sonos = soco.discovery.any_soco() 
+    laso = LaSo(os.environ["LAMETRIC_IP"], "dev", os.environ["LAMETRIC_API_KEY"], sonos)
     # if envar DELAY isn't set than it equals 60
     delay = os.getenv("DELAY", 60)
 
     while True:
-        laso.get_track()
+        # laso.get_track()
         laso.send_notification()
         time.sleep(int(delay))
 
